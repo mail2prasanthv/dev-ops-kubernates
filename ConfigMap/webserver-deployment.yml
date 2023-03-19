@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-web-deployment
+  labels:
+    type: httpd-web-deployment
+spec:
+  selector:
+    matchLabels:
+      app: web-app-httpd
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: web-app-httpd
+    spec:
+      containers:
+      - name: httpd-container
+        image: httpd
+        ports:
+          - containerPort: 80
+        volumeMounts: #Mounts the volume here.
+          - name: my-app-volume
+            mountPath: /data
+          - name: demo-config-vol  #Mounts config here
+            mountPath: /etc/config
+      volumes:  #declare a volume here
+        - name: my-app-volume
+          hostPath: # This is not recommended. A
+            path: /data #directory location on host
+            type: Directory
+        - name: demo-config-vol # defines config map volume
+          configMap: 
+            name: demo-config-map
+#  hostPath volume mounts a file or directory from the host node's filesystem into your Pod. 

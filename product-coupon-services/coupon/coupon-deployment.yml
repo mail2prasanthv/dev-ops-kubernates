@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coupon-deployment
+spec:
+  selector:
+    matchLabels:
+      app: coupon-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: coupon-service
+    spec:
+      containers:
+        - name: coupon-service-app
+          image: mail2prasanthv/coupon-service-app
+          ports:
+            - containerPort: 8080

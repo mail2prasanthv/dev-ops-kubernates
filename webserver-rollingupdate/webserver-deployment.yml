@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-web-deployment
+  labels:
+    type: httpd-web-deployment
+spec:
+  selector:
+    matchLabels:
+      app: web-app-httpd
+  replicas: 20
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 3
+      maxSurge: 4
+  template:
+    metadata:
+      labels:
+        app: web-app-httpd
+    spec:
+      containers:
+      - name: httpd-container
+        image: httpd:2 #install version 2
+        ports:
+          - containerPort: 80

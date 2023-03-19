@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: coupon-service-app # this name should match in application.properties for interservice communication. couponService.url =http://coupon-service-app:8080/couponapi/coupons/
+spec:
+  selector:
+    app: coupon-service
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30003
